@@ -6,11 +6,12 @@ import Modal from "../Modal";
 
 type Props = {};
 
-const LoginModal = (props: Props) => {
+const RegisterModal = (props: Props) => {
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
 
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -19,26 +20,32 @@ const LoginModal = (props: Props) => {
       return;
     }
 
-    registerModal.onOpen();
-    loginModal.onClose();
+    registerModal.onClose();
+    loginModal.onOpen();
   }, [loginModal, registerModal, isLoading]);
 
   const onSubmit = useCallback(async () => {
     try {
       setIsLoading(true);
 
-      //login
+      //register + login
 
-      loginModal.onClose();
+      registerModal.onClose();
     } catch (error) {
       console.log(error);
     } finally {
       setIsLoading(false);
     }
-  }, [loginModal]);
+  }, [registerModal]);
 
-  const loginBodyContent = (
+  const registerModalBodyContent = (
     <div className="flex flex-col gap-4">
+      <Input
+        placeholder="username"
+        onChange={(e) => setUsername(e.target.value)}
+        value={username}
+        disabled={isLoading}
+      />
       <Input
         placeholder="email"
         onChange={(e) => setEmail(e.target.value)}
@@ -55,15 +62,15 @@ const LoginModal = (props: Props) => {
     </div>
   );
 
-  const loginModalFooterContent = (
+  const registerModalFooterContent = (
     <div className="text-neutral-400 text-center mt-4">
       <p>
-        New to Bwipper?{" "}
+        Already got an account?{" "}
         <span
           className="cursor-point text-orange-500 font-bold hover:underline cursor-pointer"
           onClick={onToggle}
         >
-          Register
+          Login
         </span>
       </p>
     </div>
@@ -72,15 +79,15 @@ const LoginModal = (props: Props) => {
   return (
     <Modal
       disabled={isLoading}
-      isOpen={loginModal.isOpen}
-      onClose={loginModal.onClose}
+      isOpen={registerModal.isOpen}
+      onClose={registerModal.onClose}
       onSubmit={onSubmit}
-      title="Login"
-      body={loginBodyContent}
+      title="Register"
+      body={registerModalBodyContent}
       actionLabel="Submit"
-      footer={loginModalFooterContent}
+      footer={registerModalFooterContent}
     />
   );
 };
 
-export default LoginModal;
+export default RegisterModal;
