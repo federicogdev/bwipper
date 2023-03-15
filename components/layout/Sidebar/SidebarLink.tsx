@@ -38,13 +38,14 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({
       </div>
       <div
         className="
+        w-full
         relative
         hidden 
         lg:flex 
         items-row 
         gap-4 
         p-4 
-        rounded-full       
+        rounded-lg       
       hover:bg-slate-300 
         hover:bg-opacity-10 
         cursor-pointer

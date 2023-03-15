@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 :root {
-  @apply h-full bg-black font-Inter 
+  @apply h-full bg-black font-Rubik 
 }
 
 body {
-  @apply h-full bg-black font-Inter 
+  @apply h-full bg-black font-Rubik 
 }

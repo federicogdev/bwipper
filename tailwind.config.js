@@ -7,7 +7,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        Inter: ["Inter", ...defaultTheme.fontFamily.sans],
+        Rubik: ["Rubik", ...defaultTheme.fontFamily.sans],
       },
     },
   },
