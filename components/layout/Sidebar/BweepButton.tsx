@@ -1,8 +1,16 @@
+import useLoginModal from "@/hooks/useLoginModal";
+import { useCallback } from "react";
 import { FaFeather } from "react-icons/fa";
 
 const BweepButton = () => {
+  const loginModal = useLoginModal();
+
+  const onClick = useCallback(() => {
+    return loginModal.onOpen();
+  }, [loginModal]);
+
   return (
-    <div>
+    <div onClick={onClick}>
       <div
         className="
         mt-6
