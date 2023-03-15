@@ -1,7 +1,12 @@
+import Header from "@/components/Header";
 import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  return <div className="text-sky-500 text-3xl">Bwipper</div>;
+  return (
+    <>
+      <Header title="Home" />
+    </>
+  );
 }

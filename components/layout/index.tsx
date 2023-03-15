@@ -1,7 +1,7 @@
 import React from "react";
 
-import FollowBar from "@/components/layout/FollowBar";
-import Sidebar from "@/components/layout/Sidebar";
+import FollowBar from "@/components/Layout/FollowBar";
+import Sidebar from "@/components/Layout/Sidebar";
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
@@ -14,6 +14,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               col-span-3 
               lg:col-span-2 
               border-neutral-800
+              border-x-[1px] 
           "
           >
             {children}
