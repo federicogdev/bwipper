@@ -1,4 +1,5 @@
 import useCurrentUser from "@/hooks/useCurrentUser";
+import useEditModal from "@/hooks/useEditModal";
 import useUser from "@/hooks/useUser";
 import { format } from "date-fns";
 import React, { FC, useMemo } from "react";
@@ -12,6 +13,8 @@ const UserBio: FC<IUserBioProps> = ({ userId }) => {
   const { data: currentUser } = useCurrentUser();
   const { data: fetchedUser } = useUser(userId);
 
+  const editModal = useEditModal();
+
   const createdAt = useMemo(() => {
     if (!fetchedUser.createdAt) {
       return null;
@@ -21,47 +24,12 @@ const UserBio: FC<IUserBioProps> = ({ userId }) => {
   }, [fetchedUser?.createdAt]);
 
   return (
-    // <div className="border-b-[1px] border-neutral-800 pb-4">
-    //   <div className="flex justify-end p-2">
-    //     {currentUser?.id === userId ? (
-    //       <Button secondary label="Edit" onClick={() => {}} />
-    //     ) : (
-    //       <Button secondary label="Follow" onClick={() => {}} />
-    //     )}
-    //   </div>
-    //   <div className="mt-8 px-4">
-    //     <div className="flex flex-col">
-    //       <p className="text-white text-2xl font-semibold">
-    //         {fetchedUser?.name}
-    //       </p>
-    //       <p className="text-neutral-500 text-md ">@{fetchedUser?.username}</p>
-    //     </div>
-    //   </div>
-    //   <div className="flex flex-col mt-4">
-    //     <p className="text-white">{fetchedUser?.bio}</p>
-    //     <div
-    //       className="
-    //           flex
-    //           flex-row
-    //           items-center
-    //           gap-2
-    //           mt-4
-    //           text-neutral-500
-    //       "
-    //     >
-    //       <BiCalendar size={24} />
-    //       <p>Joined {createdAt}</p>
-    //     </div>
-    //   </div>
-    //   {/* <h1 className="text-white">{createdAt}</h1> */}
-    // </div>
-
     <div className="border-b-[1px] border-neutral-800 pb-4">
       <div className="flex justify-end p-2">
         {currentUser?.id === userId ? (
-          <Button secondary label="Edit" onClick={() => {}} />
+          <Button secondary label="Edit" onClick={editModal.onOpen} />
         ) : (
-          <Button onClick={() => {}} label="follow" secondary />
+          <Button onClick={() => {}} label="Follow" secondary />
         )}
       </div>
       <div className="mt-8 px-4">
