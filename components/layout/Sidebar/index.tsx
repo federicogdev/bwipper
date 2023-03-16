@@ -5,14 +5,22 @@ import { BiLogOut } from "react-icons/bi";
 import Logo from "./Logo";
 import SidebarLink from "./SidebarLink";
 import BweepButton from "./BweepButton";
+import useCurrentUser from "@/hooks/useCurrentUser";
+import { signOut } from "next-auth/react";
 
 const sidebarLinks = [
   { name: "Home", href: "/", icon: BsHouseFill },
-  { name: "Notifications", href: "/notifications", icon: BsBellFill },
-  { name: "User", href: "/users/123", icon: FaUser },
+  {
+    name: "Notifications",
+    href: "/notifications",
+    icon: BsBellFill,
+    needsAuth: true,
+  },
+  { name: "User", href: "/users/123", icon: FaUser, needsAuth: true },
 ];
 
 const Sidebar = () => {
+  const { data: currentUser } = useCurrentUser();
   return (
     <div className="col-span-1 h-full pr-4 md:pr-6">
       <div className="flex flex-col items-center lg:items-end">
@@ -24,14 +32,17 @@ const Sidebar = () => {
               href={link.href}
               icon={link.icon}
               name={link.name}
+              needsAuth={link.needsAuth}
             />
           ))}
 
-          <SidebarLink
-            onClick={() => console.log("logout")}
-            icon={BiLogOut}
-            name="Logout"
-          />
+          {currentUser && (
+            <SidebarLink
+              onClick={() => signOut()}
+              icon={BiLogOut}
+              name="Logout"
+            />
+          )}
 
           <BweepButton />
         </div>
