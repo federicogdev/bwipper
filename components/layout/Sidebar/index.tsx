@@ -8,19 +8,20 @@ import BweepButton from "./BweepButton";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { signOut } from "next-auth/react";
 
-const sidebarLinks = [
-  { name: "Home", href: "/", icon: BsHouseFill },
-  {
-    name: "Notifications",
-    href: "/notifications",
-    icon: BsBellFill,
-    needsAuth: true,
-  },
-  { name: "User", href: "/users/123", icon: FaUser, needsAuth: true },
-];
-
 const Sidebar = () => {
   const { data: currentUser } = useCurrentUser();
+
+  const sidebarLinks = [
+    { name: "Home", href: "/", icon: BsHouseFill },
+    {
+      name: "Notifications",
+      href: "/notifications",
+      icon: BsBellFill,
+      needsAuth: true,
+    },
+    { name: "User", href: "/users/123", icon: FaUser, needsAuth: true },
+  ];
+
   return (
     <div className="col-span-1 h-full pr-4 md:pr-6">
       <div className="flex flex-col items-center lg:items-end">
