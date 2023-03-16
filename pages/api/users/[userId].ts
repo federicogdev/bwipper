@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/libs/prismadb";
+import exclude from "@/util/user-cleanup";
 
 export default async function handler(
   req: NextApiRequest,
@@ -19,7 +20,24 @@ export default async function handler(
       where: {
         id: userId,
       },
+      select: {
+        id: true,
+        name: true,
+        username: true,
+        bio: true,
+        email: true,
+        emailVerified: true,
+        image: true,
+        coverImage: true,
+        profileImage: true,
+        createdAt: true,
+        updatedAt: true,
+        followingIds: true,
+        hasNotification: true,
+      },
     });
+
+    // const userWithoutPassword = exclude(user, ["hashedPassword"]);
 
     // counts the users that have the userId in the followingIds
     const followersCount = await prisma.user.count({
@@ -29,6 +47,7 @@ export default async function handler(
         },
       },
     });
+
     return res.status(200).json({ ...user, followersCount });
   } catch (error) {
     console.log(error);

@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/libs/prismadb";
+import exclude from "@/util/user-cleanup";
 
 export default async function handler(
   req: NextApiRequest,
@@ -14,7 +15,23 @@ export default async function handler(
       orderBy: {
         createdAt: "desc",
       },
+      select: {
+        id: true,
+        name: true,
+        username: true,
+        bio: true,
+        email: true,
+        emailVerified: true,
+        image: true,
+        coverImage: true,
+        profileImage: true,
+        createdAt: true,
+        updatedAt: true,
+        followingIds: true,
+        hasNotification: true,
+      },
     });
+
     return res.status(200).json(users);
   } catch (error) {
     console.log(error);
