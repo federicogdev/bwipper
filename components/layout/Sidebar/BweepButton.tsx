@@ -16,13 +16,13 @@ const BweepButton = () => {
         mt-6
         lg:hidden 
         rounded-full 
-        h-14
-        w-14
-        p-4
+        h-12
+        w-12
+        p-3
         flex
         items-center
         justify-center 
-        bg-sky-500 
+        bg-orange-500 
         hover:bg-opacity-80 
         transition 
         cursor-pointer

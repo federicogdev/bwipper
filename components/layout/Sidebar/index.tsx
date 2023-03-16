@@ -19,12 +19,17 @@ const Sidebar = () => {
       icon: BsBellFill,
       needsAuth: true,
     },
-    { name: "User", href: "/users/123", icon: FaUser, needsAuth: true },
+    {
+      name: "User",
+      href: `/users/${currentUser?.id}`,
+      icon: FaUser,
+      needsAuth: true,
+    },
   ];
 
   return (
-    <div className="col-span-1 h-full pr-4 md:pr-6">
-      <div className="flex flex-col items-center lg:items-end">
+    <div className="col-span-1 h-full  md:pr-6 ">
+      <div className="flex flex-col items-center ">
         <div className="space-y-2 lg:w-[230px]">
           <Logo />
           {sidebarLinks.map((link) => (
@@ -44,7 +49,7 @@ const Sidebar = () => {
               name="Logout"
             />
           )}
-
+          <h1>{currentUser?.id}</h1>
           <BweepButton />
         </div>
       </div>
