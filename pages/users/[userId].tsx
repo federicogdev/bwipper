@@ -23,14 +23,6 @@ const UserDetailsPage = (props: Props) => {
     );
   }
 
-  if (error) {
-    return (
-      <div className="h-full justify-center items-center flex">
-        <ClipLoader color="red" size={80} />
-      </div>
-    );
-  }
-
   return (
     <>
       <Header showBackIcon title={user?.name} />
