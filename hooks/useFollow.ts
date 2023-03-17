@@ -12,6 +12,7 @@ const useFollow = (userId: string) => {
 
   const loginModal = useLoginModal();
 
+  //checks if currentUser has already followed userId
   const isFollowing = useMemo(() => {
     const list = currentUser?.followingIds || [];
 

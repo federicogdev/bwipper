@@ -1,10 +1,11 @@
 import useCurrentUser from "@/hooks/useCurrentUser";
+import useLike from "@/hooks/useLike";
 import useLoginModal from "@/hooks/useLoginModal";
 import { formatDistanceToNowStrict } from "date-fns";
 import { useRouter } from "next/router";
 import React, { FC, useCallback, useMemo } from "react";
 import { toast } from "react-hot-toast";
-import { AiOutlineHeart, AiOutlineMessage } from "react-icons/ai";
+import { AiOutlineHeart, AiOutlineMessage, AiFillHeart } from "react-icons/ai";
 import Avatar from "../Avatar";
 
 type IPostsFeedItemProps = {
@@ -17,6 +18,7 @@ const PostsFeedItem: FC<IPostsFeedItemProps> = ({ userId, post }) => {
   const loginModal = useLoginModal();
 
   const { data: currentUser } = useCurrentUser();
+  const { hasLiked, toggleLike } = useLike({ postId: post.id, userId });
 
   const goToUser = useCallback(
     //prevents event bubbling
@@ -38,10 +40,13 @@ const PostsFeedItem: FC<IPostsFeedItemProps> = ({ userId, post }) => {
     (event: any) => {
       event.stopPropagation();
 
-      toast.success("Liked");
+      if (!currentUser) {
+        return loginModal.onOpen();
+      }
+      toggleLike();
     },
 
-    [post.user.id, router]
+    [loginModal, currentUser, toggleLike]
   );
 
   const createdAt = useMemo(() => {
@@ -51,6 +56,8 @@ const PostsFeedItem: FC<IPostsFeedItemProps> = ({ userId, post }) => {
 
     return formatDistanceToNowStrict(new Date(post.createdAt));
   }, [post.createdAt]);
+
+  const LikeIcon = hasLiked ? AiFillHeart : AiOutlineHeart;
 
   return (
     <div
@@ -90,8 +97,9 @@ const PostsFeedItem: FC<IPostsFeedItemProps> = ({ userId, post }) => {
               className="flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-orange-500"
               onClick={onLike}
             >
-              <AiOutlineHeart size={20} />
-              <p>{post.likes?.length || 0}</p>
+              <LikeIcon size={20} color={hasLiked ? "#f97316e6" : ""} />
+
+              <p>{post.likedIds?.length || 0}</p>
             </div>
           </div>
         </div>
