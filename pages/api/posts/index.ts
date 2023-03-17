@@ -42,20 +42,61 @@ export default async function handler(
         posts = await prisma.post.findMany({
           where: { userId: userId },
           //populate
-          include: { user: true, comments: true },
+          //include user and select all the fields we want
+          //we cant unfortunately just remove fields we dont want like in mongoose select('-nameOfTheFieldToRemove')
+          include: {
+            user: {
+              select: {
+                id: true,
+                name: true,
+                username: true,
+                bio: true,
+                email: true,
+                emailVerified: true,
+                image: true,
+                coverImage: true,
+                profileImage: true,
+                createdAt: true,
+                updatedAt: true,
+                followingIds: true,
+                hasNotification: true,
+              },
+            },
+            comments: true,
+          },
           orderBy: { createdAt: "desc" },
         });
       } else {
         posts = await prisma.post.findMany({
-          include: { user: true, comments: true },
+          //include user and select all the fields we want
+          //we cant unfortunately just remove fields we dont want like in mongoose select('-nameOfTheFieldToRemove')
+          include: {
+            user: {
+              select: {
+                id: true,
+                name: true,
+                username: true,
+                bio: true,
+                email: true,
+                emailVerified: true,
+                image: true,
+                coverImage: true,
+                profileImage: true,
+                createdAt: true,
+                updatedAt: true,
+                followingIds: true,
+                hasNotification: true,
+              },
+            },
+            comments: true,
+          },
+
           orderBy: { createdAt: "desc" },
         });
       }
 
       return res.status(200).json(posts);
     }
-
-    // return res.status(200).json("Hello");
   } catch (error) {
     console.log(error);
     return res.status(400).end();

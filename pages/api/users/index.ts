@@ -15,6 +15,8 @@ export default async function handler(
       orderBy: {
         createdAt: "desc",
       },
+      // select all the fields we want
+      //we cant unfortunately just remove fields we dont want like in mongoose select('-nameOfTheFieldToRemove')
       select: {
         id: true,
         name: true,
@@ -30,6 +32,7 @@ export default async function handler(
         followingIds: true,
         hasNotification: true,
       },
+      // include: { posts: true },
     });
 
     return res.status(200).json(users);

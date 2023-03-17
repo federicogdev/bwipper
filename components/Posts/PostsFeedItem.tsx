@@ -8,7 +8,7 @@ import { AiOutlineHeart, AiOutlineMessage } from "react-icons/ai";
 import Avatar from "../Avatar";
 
 type IPostsFeedItemProps = {
-  userId: string;
+  userId?: string;
   post: Record<string, any>;
 };
 

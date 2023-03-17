@@ -20,6 +20,8 @@ export default async function handler(
       where: {
         id: userId,
       },
+      // select all the fields we want
+      //we cant unfortunately just remove fields we dont want like in mongoose select('-nameOfTheFieldToRemove')
       select: {
         id: true,
         name: true,
