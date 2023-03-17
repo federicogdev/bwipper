@@ -1,53 +1,52 @@
 import axios from "axios";
 import { useCallback, useMemo } from "react";
-import toast from "react-hot-toast";
+import { toast } from "react-hot-toast";
+
 import useCurrentUser from "./useCurrentUser";
 import useLoginModal from "./useLoginModal";
 import useUser from "./useUser";
 
 const useFollow = (userId: string) => {
-  //gets session user
   const { data: currentUser, mutate: mutateCurrentUser } = useCurrentUser();
-  //gets user from useFollow parameters
   const { mutate: mutateFetchedUser } = useUser(userId);
 
   const loginModal = useLoginModal();
 
-  //determines if the session user has the userId from params in his followingIds array
   const isFollowing = useMemo(() => {
     const list = currentUser?.followingIds || [];
 
     return list.includes(userId);
   }, [currentUser?.followingIds, userId]);
 
+  //   const isFollowing = currentUser?.followingIds.includes(userId);
+
   const toggleFollow = useCallback(async () => {
-    //in case user is not logged in
     if (!currentUser) {
       return loginModal.onOpen();
     }
 
     try {
-      //   let request;
+      let request;
 
-      //   if (isFollowing) {
-      //     request = () => axios.delete("/api/follow", { data: { userId } });
-      //   } else {
-      //     request = () => axios.post("/api/follow", { userId });
-      //   }
+      //if isFollowing make a request to unfollow
+      // note to include a body on axios.delete we have to specify data: {body}
 
-      const request = isFollowing
-        ? //in the case of a delete req axios takes a body -> userId in a data object
-          () => axios.delete("/api/follow", { data: { userId } })
-        : () => axios.post("/api/follow", { userId });
+      if (isFollowing) {
+        request = () => axios.delete("/api/follow", { data: { userId } });
+      } else {
+        request = () => axios.post("/api/follow", { userId });
+      }
 
-      //makes the follow request be it delere or post
+      //makes the appropriate request
+
       await request();
-      //revalidates current user
+
+      // "revalidates" the current user
       mutateCurrentUser();
-      //revalidates current user
+      // "revalidates" the fetched user
       mutateFetchedUser();
 
-      toast.success("Success");
+      isFollowing ? toast.success("Unfollowed") : toast.success("Followed");
     } catch (error) {
       toast.error("Something went wrong");
     }
