@@ -37,6 +37,7 @@ const Avatar: FC<IAvatarProps> = ({ userId, hasBorder, isLarge }) => {
         transition
         cursor-pointer
         relative
+        bg-orange-500
       `}
     >
       <Image
