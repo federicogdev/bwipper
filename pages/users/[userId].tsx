@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import PostsFeed from "@/components/Posts/PostsFeed";
 import UserBio from "@/components/Users/UserBio";
 import UserHero from "@/components/Users/UserHero";
 import useUser from "@/hooks/useUser";
@@ -35,6 +36,7 @@ const UserDetailsPage = (props: Props) => {
       <Header showBackIcon title={user?.name} />
       <UserHero userId={userId as string} />
       <UserBio userId={userId as string} />
+      <PostsFeed userId={userId as string} />
     </>
   );
 };

@@ -49,7 +49,6 @@ const Sidebar = () => {
               name="Logout"
             />
           )}
-          <h1>{currentUser?.id}</h1>
           <BweepButton />
         </div>
       </div>
