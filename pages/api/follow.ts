@@ -46,6 +46,22 @@ export default async function handler(
         },
       });
 
+      await prisma.notification.create({
+        data: {
+          body: "Someone followed you!",
+          userId,
+        },
+      });
+
+      await prisma.user.update({
+        where: {
+          id: userId,
+        },
+        data: {
+          hasNotification: true,
+        },
+      });
+
       return res.status(200).json(updatedUser);
     }
 

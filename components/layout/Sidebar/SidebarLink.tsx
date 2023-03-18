@@ -3,6 +3,7 @@ import useLoginModal from "@/hooks/useLoginModal";
 import { useRouter } from "next/router";
 import React, { useCallback } from "react";
 import { IconType } from "react-icons";
+import { BsDot } from "react-icons/bs";
 
 interface SidebarLinkProps {
   name: string;
@@ -10,6 +11,7 @@ interface SidebarLinkProps {
   href?: string;
   onClick?: () => void;
   needsAuth?: boolean;
+  alert?: boolean;
 }
 
 const SidebarLink: React.FC<SidebarLinkProps> = ({
@@ -18,6 +20,7 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({
   href,
   onClick,
   needsAuth,
+  alert,
 }) => {
   const router = useRouter();
   const { data: currentUser } = useCurrentUser();
@@ -54,6 +57,9 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({
       "
       >
         <Icon size={28} color="white" />
+        {alert ? (
+          <BsDot className="text-orange-500 absolute -top-4 left-0" size={70} />
+        ) : null}
       </div>
       <div
         className="
@@ -73,6 +79,9 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({
       >
         <Icon size={24} color="white" />
         <p className="hidden lg:block text-white text-xl">{name}</p>
+        {alert ? (
+          <BsDot className="text-orange-500 absolute -top-4 left-0" size={70} />
+        ) : null}
       </div>
     </div>
   );

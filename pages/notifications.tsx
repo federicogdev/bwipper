@@ -1,9 +1,35 @@
-import React from "react";
+import Header from "@/components/Header";
+import NotificationsFeed from "@/components/NotificationsFeed";
+import useCurrentUser from "@/hooks/useCurrentUser";
+import { NextPageContext } from "next";
+import { getSession } from "next-auth/react";
 
-type Props = {};
+export async function getServerSideProps(context: NextPageContext) {
+  const session = await getSession(context);
 
-const Notifications = (props: Props) => {
-  return <div>Notifications</div>;
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      session,
+    },
+  };
+}
+
+const Notifications = () => {
+  return (
+    <>
+      <Header showBackIcon title="Notifications" />
+      <NotificationsFeed />
+    </>
+  );
 };
 
 export default Notifications;
