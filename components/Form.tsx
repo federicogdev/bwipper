@@ -1,5 +1,6 @@
 import useCurrentUser from "@/hooks/useCurrentUser";
 import useLoginModal from "@/hooks/useLoginModal";
+import usePost from "@/hooks/usePost";
 import usePosts from "@/hooks/usePosts";
 import useRegisterModal from "@/hooks/useRegisterModal";
 import axios from "axios";
@@ -24,24 +25,32 @@ const Form: FC<IFormProps> = ({ placeholder, isComment, postId }) => {
   const { data: currentUser } = useCurrentUser();
   //used to revalidate posts after new one is created
   const { mutate: mutatePosts } = usePosts();
-
+  //used to revalidate after comments is created
+  const { mutate: mutatePost } = usePost(postId as string);
   const onSubmit = useCallback(async () => {
     try {
       setIsLoading(true);
+
+      const requestUrl = isComment
+        ? `/api/comments?postId=${postId}`
+        : "/api/posts";
       //post request to api endpoint with body passed in req.body
-      await axios.post("/api/posts", { body });
+      await axios.post(requestUrl, { body });
 
       toast.success("Bweeped successfully.");
       //resets body text in state
       setBody("");
       //loads new posts array
       mutatePosts();
+      //loads new comments revaluidating post
+      mutatePost();
     } catch (error) {
       toast.error("Something went wrong.");
     } finally {
       setIsLoading(false);
     }
-  }, [body, mutatePosts]);
+  }, [body, mutatePosts, postId, isComment]);
+
   return (
     <div className="border-b-[1px] border-neutral-800 px-5 py-2">
       {currentUser ? (

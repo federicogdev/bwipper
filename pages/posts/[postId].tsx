@@ -1,5 +1,6 @@
 import Form from "@/components/Form";
 import Header from "@/components/Header";
+import CommentsFeed from "@/components/Posts/CommentsFeed";
 import PostsFeedItem from "@/components/Posts/PostsFeedItem";
 import usePost from "@/hooks/usePost";
 import { useRouter } from "next/router";
@@ -30,6 +31,7 @@ const PostDetailsPage = (props: Props) => {
         postId={postId as string}
         placeholder="Bweep your reply"
       />
+      <CommentsFeed comments={fetchedPost?.comments} />
     </>
   );
 };

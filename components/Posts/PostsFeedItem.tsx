@@ -65,7 +65,9 @@ const PostsFeedItem: FC<IPostsFeedItemProps> = ({ userId, post }) => {
       className="border-b-[1px] border-neutral-800 p-5 cursor-pointer hover:bg-neutral-900 transition"
     >
       <div className="flex flex-row items-start gap-3">
-        <Avatar userId={post.user.id} />
+        <div className="flex">
+          <Avatar userId={post.user.id} />
+        </div>
         <div className="w-full">
           <div className="flex flex-row items-center justify-between">
             <div className="flex flex-row items-center">

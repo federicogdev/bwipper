@@ -20,7 +20,7 @@ const serverAuth = async (req: NextApiRequest) => {
 
   //check if theres a  user in the db with the email from session
   if (!currentUser) {
-    throw new Error("Not signed in");
+    throw new Error("User not found");
   }
 
   return { currentUser };
