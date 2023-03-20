@@ -35,6 +35,8 @@ export default async function handler(
     if (req.method === "GET") {
       const { userId } = req.query;
 
+      // const page = req.query.page as string;
+
       //initialized only so that we can return something different based on req.query
       let posts;
 
@@ -70,6 +72,10 @@ export default async function handler(
         posts = await prisma.post.findMany({
           //include user and select all the fields we want
           //we cant unfortunately just remove fields we dont want like in mongoose select('-nameOfTheFieldToRemove')
+          // where: {
+          //   body: page && page !== "" && { contains: page },
+          //   // body: limit && limit !== "" && { contains: limit },
+          // },
           include: {
             user: {
               select: {
