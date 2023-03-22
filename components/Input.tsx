@@ -32,7 +32,7 @@ const Input: React.FC<IInputProps> = ({
               w-full
               p-4 
               text-lg 
-              bg-black 
+              bg-neutral-800 
               border-2
               border-neutral-800 
               rounded-md
